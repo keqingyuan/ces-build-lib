@@ -4,6 +4,6 @@ def call(Map config){
         echo 'Checkout...'
         Git git = new Git(this, '${config.credentials}')
 
-        git url: "${config.url}"
+        git url: "${config.url}", branch: "${config.url}"
     }
 }
