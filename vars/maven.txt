@@ -1,0 +1,3 @@
+用于mvn构建
+
+mvn 'clean package' -s settings.xml
