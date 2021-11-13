@@ -19,8 +19,12 @@ class Svn implements Serializable {
         this.sh = new Sh(script)
     }
 
+    def call(args) {
+        svn(args)
+    }
+
     /**
-     * Credential-aware wrapper around the global "svn" step.
+     * Credential-aware wrapper around the global "checkout" step.
      */
     private def svn(args) {
 
@@ -33,13 +37,23 @@ class Svn implements Serializable {
                 }
             } catch (MissingMethodException ignored) {
                 // This exception indicates that we don't have a Map. Assume url String and add credentials
-                args = [url: args.toString(), credentialsId: credentials]
+                args = [url: args.toString(), credentialsId: credentials,local: '.']
             }
         }
-        script.svn args
-    }
-
-    def call(args) {
-        svn(args)
+        script.checkout([$class: 'SubversionSCM',
+                         additionalCredentials: [],
+                         excludedCommitMessages: '',
+                         excludedRegions: '',
+                         excludedRevprop: '',
+                         excludedUsers: '',
+                         filterChangelog: false,
+                         ignoreDirPropChanges: false,
+                         includedRegions: '',
+                         locations: [[credentialsId: "${args.get('credentialsId')}",
+                                      depthOption: 'infinity',
+                                      ignoreExternalsOption: true,
+                                      local: "${args.get('local')}",
+                                      remote: "${args.get('url')}"]],
+                         workspaceUpdater: [$class: 'UpdateUpdater']])
     }
 }

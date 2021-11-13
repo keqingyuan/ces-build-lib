@@ -1,1 +1,2 @@
+用于从Git仓库获取源码
 checkoutGit url:'git@github.com:keqingyuan/ces-build-lib.git',branch:'develop',credentialsId:'ssh-github.com',local:'.'
