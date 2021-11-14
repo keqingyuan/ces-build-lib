@@ -35,9 +35,12 @@ class Svn implements Serializable {
                 if (!args.containsKey('credentialsId')) {
                     args.put('credentialsId', credentials)
                 }
+                if (!args.containsKey('local')) {
+                    args.put('local', '.')
+                }
             } catch (MissingMethodException ignored) {
                 // This exception indicates that we don't have a Map. Assume url String and add credentials
-                args = [url: args.toString(), credentialsId: credentials,local: '.']
+                args = [url: args.toString(), credentialsId: credentials, local: '.']
             }
         }
         script.checkout([$class: 'SubversionSCM',
