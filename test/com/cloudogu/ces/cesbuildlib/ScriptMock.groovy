@@ -140,6 +140,11 @@ class ScriptMock {
         return args
     }
 
+    def checkout(def args) {
+        actualGitArgs = args
+        return args
+    }
+
     void writeFile(Map<String, String> params) {
         writeFileParams.add(params)
     }
